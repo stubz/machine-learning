@@ -276,14 +276,14 @@ Classification. We want to understand when students are likely to pass or fail, 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># TODO: Calculate number of students</span>
 <span class="n">n_students</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c"># TODO: Calculate number of features</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
 
 <span class="c"># TODO: Calculate passing students</span>
 <span class="n">n_passed</span> <span class="o">=</span> <span class="n">student_data</span><span class="p">[</span><span class="n">student_data</span><span class="o">.</span><span class="n">passed</span><span class="o">==</span><span class="s">&#39;yes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -292,7 +292,7 @@ Classification. We want to understand when students are likely to pass or fail, 
 <span class="n">n_failed</span> <span class="o">=</span> <span class="n">student_data</span><span class="p">[</span><span class="n">student_data</span><span class="o">.</span><span class="n">passed</span><span class="o">==</span><span class="s">&#39;no&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c"># TODO: Calculate graduation rate</span>
-<span class="n">grad_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="n">n_passed</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n_passed</span> <span class="o">+</span> <span class="n">n_failed</span><span class="p">)</span>
+<span class="n">grad_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="n">n_passed</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n_passed</span> <span class="o">+</span> <span class="n">n_failed</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
 
 <span class="c"># Print the results</span>
 <span class="k">print</span> <span class="s">&quot;Total number of students: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_students</span><span class="p">)</span>
@@ -313,10 +313,10 @@ Classification. We want to understand when students are likely to pass or fail, 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Total number of students: 395
-Number of features: 31
+Number of features: 30
 Number of students who passed: 265
 Number of students who failed: 130
-Graduation rate of the class: 0.67%
+Graduation rate of the class: 67.09%
 </pre>
 </div>
 </div>
@@ -589,7 +589,7 @@ Testing set has 95 samples.
 <ul>
 <li>It is applied to robot programming (<a href="http://onlinelibrary.wiley.com/doi/10.1002/asmb.2145/full">http://onlinelibrary.wiley.com/doi/10.1002/asmb.2145/full</a>)</li>
 <li>One of the strengths is that the algorithm is simple to understand. </li>
-<li>The weakness is that it can overfit.</li>
+<li>The weakness is that it has many parameters to be tuned, so depending on how well you tune the parameters, it can perform poorly.</li>
 <li>We are trying to solve the classification problem, and Random Forest performs normally better than Decision Tree method.</li>
 </ul>
 <p>SGDC</p>
@@ -597,7 +597,7 @@ Testing set has 95 samples.
 <li>It is applied to peformance evaluation of employees (<a href="http://www.iosrjournals.org/iosr-jbm/papers/Vol16-issue6/Version-3/I016637780.pdf">http://www.iosrjournals.org/iosr-jbm/papers/Vol16-issue6/Version-3/I016637780.pdf</a>)</li>
 <li>The algorithm runs faster than Random Forest for example, so it is more efficient.</li>
 <li>One of the weakness is that it has lots of hyperparameters, so depending on how well you tune those parameters, it can perform poorly. </li>
-<li>We are trying to solve the classification problem, so this can be a good candidate. </li>
+<li>Although it has lots of hyperparameters to be tuned, it can perform well if they are correctly set. And it can run faster than Random Forest.</li>
 </ul>
 
 </div>
@@ -696,7 +696,7 @@ Testing set has 95 samples.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="c"># TODO: Import the three supervised learning models from sklearn</span>
@@ -711,10 +711,10 @@ Testing set has 95 samples.
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">SGDClassifier</span>
 
 <span class="c"># TODO: Initialize the three models</span>
-<span class="n">clf_A</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">clf_A</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">9430</span><span class="p">)</span>
 <span class="c">#clf_A = GradientBoostingClassifier()</span>
-<span class="n">clf_B</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
-<span class="n">clf_C</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">()</span>
+<span class="n">clf_B</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">9430</span><span class="p">)</span>
+<span class="n">clf_C</span> <span class="o">=</span> <span class="n">SGDClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">9430</span><span class="p">)</span>
 <span class="n">classifiers</span> <span class="o">=</span> <span class="p">[</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">clf_B</span><span class="p">,</span> <span class="n">clf_C</span><span class="p">]</span>
 <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Random Forest&quot;</span><span class="p">,</span> <span class="s">&quot;SVM&quot;</span><span class="p">,</span> <span class="s">&quot;SGD&quot;</span><span class="p">]</span>
 
@@ -757,71 +757,71 @@ Testing set has 95 samples.
 ====================================================================================================
 Classfier Name: Random Forest.
 Training a RandomForestClassifier using a training set size of 100. . .
-Trained model in 0.0190 seconds
-Made predictions in 0.0017 seconds.
+Trained model in 0.0277 seconds
+Made predictions in 0.0021 seconds.
 F1 score for training set: 1.0000.
-Made predictions in 0.0019 seconds.
-F1 score for test set: 0.7360.
+Made predictions in 0.0016 seconds.
+F1 score for test set: 0.7941.
 ----------------------------------------------------------------------------------------------------
 Training a RandomForestClassifier using a training set size of 200. . .
-Trained model in 0.0121 seconds
+Trained model in 0.0145 seconds
+Made predictions in 0.0020 seconds.
+F1 score for training set: 0.9924.
 Made predictions in 0.0014 seconds.
-F1 score for training set: 0.9922.
-Made predictions in 0.0012 seconds.
-F1 score for test set: 0.7200.
+F1 score for test set: 0.7752.
 ----------------------------------------------------------------------------------------------------
 Training a RandomForestClassifier using a training set size of 300. . .
-Trained model in 0.0128 seconds
+Trained model in 0.0136 seconds
+Made predictions in 0.0025 seconds.
+F1 score for training set: 0.9975.
 Made predictions in 0.0020 seconds.
-F1 score for training set: 0.9951.
-Made predictions in 0.0014 seconds.
-F1 score for test set: 0.6822.
+F1 score for test set: 0.7023.
 ----------------------------------------------------------------------------------------------------
 ====================================================================================================
 Classfier Name: SVM.
 Training a SVC using a training set size of 100. . .
-Trained model in 0.0028 seconds
-Made predictions in 0.0019 seconds.
+Trained model in 0.0040 seconds
+Made predictions in 0.0021 seconds.
 F1 score for training set: 0.8707.
-Made predictions in 0.0017 seconds.
+Made predictions in 0.0011 seconds.
 F1 score for test set: 0.7974.
 ----------------------------------------------------------------------------------------------------
 Training a SVC using a training set size of 200. . .
-Trained model in 0.0069 seconds
-Made predictions in 0.0051 seconds.
+Trained model in 0.0052 seconds
+Made predictions in 0.0038 seconds.
 F1 score for training set: 0.8600.
-Made predictions in 0.0029 seconds.
+Made predictions in 0.0019 seconds.
 F1 score for test set: 0.7973.
 ----------------------------------------------------------------------------------------------------
 Training a SVC using a training set size of 300. . .
-Trained model in 0.0122 seconds
-Made predictions in 0.0068 seconds.
+Trained model in 0.0111 seconds
+Made predictions in 0.0087 seconds.
 F1 score for training set: 0.8651.
-Made predictions in 0.0022 seconds.
+Made predictions in 0.0023 seconds.
 F1 score for test set: 0.7919.
 ----------------------------------------------------------------------------------------------------
 ====================================================================================================
 Classfier Name: SGD.
 Training a SGDClassifier using a training set size of 100. . .
-Trained model in 0.0009 seconds
-Made predictions in 0.0002 seconds.
-F1 score for training set: 0.1944.
-Made predictions in 0.0004 seconds.
-F1 score for test set: 0.1176.
+Trained model in 0.0063 seconds
+Made predictions in 0.0027 seconds.
+F1 score for training set: 0.7805.
+Made predictions in 0.0003 seconds.
+F1 score for test set: 0.7898.
 ----------------------------------------------------------------------------------------------------
 Training a SGDClassifier using a training set size of 200. . .
-Trained model in 0.0014 seconds
-Made predictions in 0.0006 seconds.
-F1 score for training set: 0.8264.
+Trained model in 0.0009 seconds
 Made predictions in 0.0002 seconds.
-F1 score for test set: 0.7801.
+F1 score for training set: 0.0153.
+Made predictions in 0.0002 seconds.
+F1 score for test set: 0.0317.
 ----------------------------------------------------------------------------------------------------
 Training a SGDClassifier using a training set size of 300. . .
 Trained model in 0.0010 seconds
+Made predictions in 0.0003 seconds.
+F1 score for training set: 0.8072.
 Made predictions in 0.0002 seconds.
-F1 score for training set: 0.6875.
-Made predictions in 0.0002 seconds.
-F1 score for test set: 0.6372.
+F1 score for test set: 0.7898.
 ----------------------------------------------------------------------------------------------------
 </pre>
 </div>
@@ -1000,7 +1000,7 @@ Generally, one of the ensemble methods such as Gradient Boosting and Random Fore
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-The SVM model tries to find a combination of features so that the model can best separate students who passed and who did not. There may be students who actually passed but the model predicts they failed, but the model tries to minimise such a misclassification as small as possible.</p>
+SVM first tries to transform the original data set so that we will be able to find a hidden structure of the data that is easier for the model to deal with. It then tries to find a cut-off line in such a way that it is robust to outliers (i.e. the result is not sensitive to a few outliers.) Let's say we have two data points for two students where one student passed and the other failed, and the characteristics of those two points are very similar. The model tries to set a cut-off line so that it is far from both of the points.</p>
 
 </div>
 </div>
