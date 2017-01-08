@@ -561,11 +561,11 @@ When you compare the annual purchase cost of each product category with the firs
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
 
 <span class="c"># TODO: Make a copy of the DataFrame, using the &#39;drop&#39; function to drop the given feature</span>
 <span class="n">new_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">&#39;Milk&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -578,12 +578,12 @@ When you compare the annual purchase cost of each product category with the firs
 <span class="k">print</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span>
 <span class="k">print</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span>
 <span class="c"># TODO: Create a decision tree regressor and fit it to the training set</span>
-<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">3290</span><span class="p">)</span>
+<span class="n">regressor</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">3290</span><span class="p">)</span>
 
 <span class="c"># TODO: Report the score of the prediction using the testing set</span>
 <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">shape</span>
+<span class="c">#print y_pred.shape</span>
 <span class="k">print</span> <span class="n">y_pred</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 <span class="k">print</span> <span class="n">y_test</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
@@ -605,10 +605,10 @@ When you compare the annual purchase cost of each product category with the firs
 (330,)
 (110, 5)
 (110,)
-(110,)
-[16599  1882  1162 10473   286  5291  5025  1433  5291  6602]
+[ 11095.   8323.    713.   4025.    112.   9540.   4339.   3587.   3737.
+   1795.]
 [ 6264  4753  1114  7704   589  6154  7260  3154 10690  8397]
-0.0
+-0.699826609977
 </pre>
 </div>
 </div>
@@ -634,7 +634,7 @@ When you compare the annual purchase cost of each product category with the firs
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-I tried to predict Milk variable from the rest of the five variables. The score was 0, and it suggests that the other features are not necessary to predict Milk.</p>
+I tried to predict Milk variable from the rest of the five variables. The score was -0.7, so the fit is poor. It suggests the other five categories are useless to predict Milk values, which in turn means Milk variable is necessary and not redundant to predict customers' spending habits.</p>
 
 </div>
 </div>
@@ -2243,7 +2243,7 @@ AAAASUVORK5CYII=
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-Pairs that appear to be correlated are; Milk and Grocery, Milk and Detergents_Paper, Grocery and Detergents_Paper. This contradicts the score of zero in the previous model that tries to predict Milk from the other five features. 
+Pairs that appear to be correlated are; Milk and Grocery, Milk and Detergents_Paper, Grocery and Detergents_Paper. This contradicts the negative score in the previous model that tries to predict Milk from the other five features. Perhaps the model was not tuned well enough or the choice of the model was not the best. The scatter plot suggests that Milk can be approximated by a linear combination of Detergents_Paper and Grocery.
 All the six variables have the distributions that are skewed to the right (the mass is concentrated on the left of the figure.)</p>
 
 </div>
@@ -5567,10 +5567,13 @@ Once you have performed this implementation, the dataset will be stored in the v
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c"># For each feature find the data points with extreme high or low values</span>
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">cnt</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+
+<span class="c"># For each feature find the data points with extreme high or low values</span>
 <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">log_data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
     
     <span class="c"># TODO: Calculate Q1 (25th percentile of the data) for the given feature</span>
@@ -5585,9 +5588,17 @@ Once you have performed this implementation, the dataset will be stored in the v
     <span class="c"># Display the outliers</span>
     <span class="k">print</span> <span class="s">&quot;Data points considered outliers for the feature &#39;{}&#39;:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="o">~</span><span class="p">((</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">step</span><span class="p">))])</span>
+    <span class="c">#print log_data[~((log_data[feature] &gt;= Q1 - step) &amp; (log_data[feature] &lt;= Q3 + step))].index</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">log_data</span><span class="p">[</span><span class="o">~</span><span class="p">((</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="n">step</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">log_data</span><span class="p">[</span><span class="n">feature</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="n">step</span><span class="p">))]</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+        <span class="n">cnt</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     
 <span class="c"># OPTIONAL: Select the indices for data points you wish to remove</span>
 <span class="n">outliers</span>  <span class="o">=</span> <span class="p">[]</span>
+<span class="k">print</span> <span class="s">&quot;Records that appear more than once in the outlier criteria&quot;</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cnt</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">k</span>
+<span class="k">print</span> <span class="n">cnt</span>
 
 <span class="c"># Remove the outliers, if any were specified</span>
 <span class="n">good_data</span> <span class="o">=</span> <span class="n">log_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">log_data</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">outliers</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
@@ -6219,6 +6230,19 @@ Once you have performed this implementation, the dataset will be stored in the v
 
 </div>
 
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Records that appear more than once in the outlier criteria
+128
+154
+65
+66
+75
+Counter({154: 3, 128: 2, 65: 2, 66: 2, 75: 2, 193: 1, 264: 1, 137: 1, 142: 1, 145: 1, 412: 1, 285: 1, 161: 1, 420: 1, 38: 1, 171: 1, 429: 1, 175: 1, 304: 1, 305: 1, 439: 1, 184: 1, 57: 1, 187: 1, 203: 1, 325: 1, 289: 1, 81: 1, 338: 1, 86: 1, 343: 1, 218: 1, 95: 1, 96: 1, 353: 1, 98: 1, 355: 1, 356: 1, 357: 1, 233: 1, 109: 1, 183: 1})
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -6239,7 +6263,7 @@ Once you have performed this implementation, the dataset will be stored in the v
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
-Data points 75 and 154 are considered outliers for more than one feature based on the definitino above. These data points should not be removed from the dataset because they do not look particularly strange. 75 has extremely low Grocery and Detergents_Paper values that are close to one, but the values of the rest of the four features look normal. Similarly, 154 has extremely low Detergents_Paper and Delicatessen values that are close to two, but the values of the rest of the four features look normal.</p>
+Data points 65, 66, 75, 128 and 154 are considered outliers for more than one feature based on the definitino above. These data points should not be removed from the dataset because they do not look particularly strange. For example, 75 has extremely low Grocery and Detergents_Paper values that are close to one, but the values of the rest of the four features look normal. Similarly, 154 has extremely low Detergents_Paper and Delicatessen values that are close to two, but the values of the rest of the four features look normal.</p>
 
 </div>
 </div>
@@ -6271,7 +6295,7 @@ Data points 75 and 154 are considered outliers for more than one feature based o
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
@@ -6284,6 +6308,9 @@ Data points 75 and 154 are considered outliers for more than one feature based o
 
 <span class="c"># Generate PCA results plot</span>
 <span class="n">pca_results</span> <span class="o">=</span> <span class="n">vs</span><span class="o">.</span><span class="n">pca_results</span><span class="p">(</span><span class="n">good_data</span><span class="p">,</span> <span class="n">pca</span><span class="p">)</span>
+
+<span class="c"># calculate the cumsum of each component</span>
+<span class="k">print</span> <span class="n">pca_results</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -6293,6 +6320,27 @@ Data points 75 and 154 are considered outliers for more than one feature based o
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>             Explained Variance   Fresh    Milk  Grocery  Frozen  \
+Dimension 1              0.4424 -0.1737  0.3945   0.4544 -0.1722   
+Dimension 2              0.7190  0.5114  0.5569   0.5238  0.3155   
+Dimension 3              0.8352  1.1849  0.5238   0.5560  0.0307   
+Dimension 4              0.9314  0.9706  0.5424   0.6205  0.8368   
+Dimension 5              0.9772  0.9714 -0.1799   0.2725  0.8730   
+Dimension 6              1.0001  1.0007 -0.7229   1.0864  0.8904   
+
+             Detergents_Paper  Delicatessen  
+Dimension 1            0.7455        0.1494  
+Dimension 2            0.7874        0.6591  
+Dimension 3            1.0056        0.0145  
+Dimension 4            1.1957       -0.4990  
+Dimension 5            1.7594       -0.3036  
+Dimension 6            1.5570       -0.2808  
+</pre>
+</div>
+</div>
 
 <div class="output_area"><div class="prompt"></div>
 
@@ -6731,10 +6779,10 @@ gJ3jfZUp/SsAAAAASUVORK5CYII=
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong>
 71.9% of the variance is explained by the first and second principal component. 93.14% of the variance is explained by the first four principal components.</p>
-<p>The first principal component has high positive weight for Milk, Grocery and Detergents_Paper. The first component represents things that are used in the kitchen. 
-The second principal component has high positive weight for Fresh, Frozen and Delicatessen. Fresh and Frozen could be considered to be used to prepare delicatessen foods, so this component represents purchasing in delicatessen. 
-The third principal component has high positive weight for Fresh and negative weight for Frozen and Delicatessen. It represents puchasing fresh, uncooked foods. 
-The fourth principal component has high Frozen weight and negative Delicatessen weight. This is similar to the third principal component, and it represents purchasing in Frozen food.</p>
+<p>The first principal component has high positive weight for Milk, Grocery and Detergents_Paper. Detergents_Paper has the highest value among these, so the first component represents purchase in retail goods. 
+The second principal component has high positive weight for Fresh, Frozen and Delicatessen. Fresh and Frozen could be considered to be used to prepare delicatessen foods, so this component represents purchasing in delicatessen such as restaurants or cafes. 
+The third principal component has high positive weight for Fresh and negative weight for Frozen and Delicatessen. It represents puchasing fresh, uncooked foods such as restaurants. 
+The fourth principal component has high Frozen weight and negative Delicatessen weight. This is similar to the third principal component, and it represents purchasing in Frozen food such as restaurants.</p>
 
 </div>
 </div>
