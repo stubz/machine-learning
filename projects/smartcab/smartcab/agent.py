@@ -3,6 +3,7 @@ import math
 from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
+import numpy as np
 
 class LearningAgent(Agent):
     """ An agent that learns to drive in the Smartcab world.
@@ -44,6 +45,7 @@ class LearningAgent(Agent):
             self.alpha = 0.0
         else:
             self.epsilon = max(self.epsilon - self.alpha, 0)
+            # self.epsilon = np.exp(-self.alpha*self.n_trials)
 
         return None
 
