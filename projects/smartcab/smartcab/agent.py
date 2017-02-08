@@ -24,6 +24,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set any additional class parameters as needed
+        self.trials = 1 # used for decaying function
 
 
     def reset(self, destination=None, testing=False):
