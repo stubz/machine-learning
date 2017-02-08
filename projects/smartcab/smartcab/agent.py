@@ -46,8 +46,8 @@ class LearningAgent(Agent):
             self.epsilon = 0.0
             self.alpha = 0.0
         else:
-            # self.epsilon = max(self.epsilon - self.alpha, 0)
-            self.epsilon = np.exp(-self.alpha*self.trials)
+            self.epsilon = max(self.epsilon - self.alpha, 0)
+            # self.epsilon = np.exp(-self.alpha*self.trials)
 
         return None
 
