@@ -41,12 +41,13 @@ class LearningAgent(Agent):
         # Update epsilon using a decay function of your choice
         # Update additional class parameters as needed
         # If 'testing' is True, set epsilon and alpha to 0
+        self.trials += 1 
         if testing:
             self.epsilon = 0.0
             self.alpha = 0.0
         else:
-            self.epsilon = max(self.epsilon - self.alpha, 0)
-            # self.epsilon = np.exp(-self.alpha*self.n_trials)
+            # self.epsilon = max(self.epsilon - self.alpha, 0)
+            self.epsilon = np.exp(-self.alpha*self.trials)
 
         return None
 
