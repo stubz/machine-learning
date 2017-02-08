@@ -115,6 +115,20 @@ class LearningAgent(Agent):
         # When not learning, choose a random action
         # When learning, choose a random action with 'epsilon' probability
         #   Otherwise, choose an action with the highest Q-value for the current state
+        if self.learning:
+            keys = []
+            if random.random() < self.epsilon:
+                action = random.choice(Environment.valid_actions)
+            else:
+                for k, v in self.Q[state].iteritems():
+                    if v == self.get_maxQ(state):
+                        keys.append(k)
+                action = random.choice(keys)
+            
+        else:
+            # choose None, forward, left or right randomly
+            random.choice(Environment.valid_actions) 
+            
  
         return action
 
@@ -129,6 +143,8 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
+        if self.learning:
+            self.Q[state][action] += self.alpha * (reward - self.Q[state][action])
 
         return
 
