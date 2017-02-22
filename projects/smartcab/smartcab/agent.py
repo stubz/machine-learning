@@ -47,13 +47,15 @@ class LearningAgent(Agent):
             self.alpha = 0.0
         else:
             #self.epsilon = max(self.epsilon - self.alpha, 0)
-            self.epsilon = max(self.epsilon - 0.05, 0)
+            #self.epsilon = max(self.epsilon - 0.0005, 0)
+            self.epsilon = np.cos(0.00025*self.trials)
             #self.epsilon = np.exp(-self.alpha*self.trials)
             #self.epsilon = self.alpha**self.trials
             #self.epsilon = self.trials**(-2)
             
             # decay the learning rate too
-            # self.alpha = -self.alpha*(self.trials**(-1))
+            #self.alpha = max(self.alpha - 0.0005, 0)
+            self.alpha = np.cos(0.00025*self.trials)
 
         return None
 
@@ -191,8 +193,8 @@ def run():
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
     # agent = env.create_agent(LearningAgent, learning = True)
-    agent = env.create_agent(LearningAgent, learning = True)
-    #agent = env.create_agent(LearningAgent, learning = True, epsilon=1.0, alpha=0.005)
+    #agent = env.create_agent(LearningAgent, learning = True)
+    agent = env.create_agent(LearningAgent, learning = True, epsilon=1.0, alpha=1.0)
     
     ##############
     # Follow the driving agent
@@ -207,17 +209,17 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay = 0.001, log_metrics = True, display = False, optimized=False)
+    #sim = Simulator(env, update_delay = 0.001, log_metrics = True, display = False, optimized=False)
     #sim = Simulator(env, update_delay = 3.0, log_metrics = True, display = True, optimized=True)
-    #sim = Simulator(env, update_delay = 1.0, log_metrics = True, display = False, optimized=True)
+    sim = Simulator(env, update_delay = 0.000001, log_metrics = True, display = False, optimized=True)
     
     ##############
     # Run the simulator
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=10)
-    #sim.run(tolerance = 0.005, n_test=50)
+    #sim.run(n_test=10)
+    sim.run(tolerance = 0.001, n_test=100)
 
 
 if __name__ == '__main__':
