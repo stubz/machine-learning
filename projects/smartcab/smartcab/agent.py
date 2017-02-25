@@ -46,16 +46,18 @@ class LearningAgent(Agent):
             self.epsilon = 0.0
             self.alpha = 0.0
         else:
+            self.epsilon = np.cos(0.005*self.trials)
             #self.epsilon = max(self.epsilon - self.alpha, 0)
-            #self.epsilon = max(self.epsilon - 0.0005, 0)
-            self.epsilon = np.cos(0.00025*self.trials)
+            #self.epsilon = max(self.epsilon - 0.05, 0)
+            #self.epsilon = np.cos(0.00025*self.trials)
             #self.epsilon = np.exp(-self.alpha*self.trials)
             #self.epsilon = self.alpha**self.trials
             #self.epsilon = self.trials**(-2)
             
             # decay the learning rate too
             #self.alpha = max(self.alpha - 0.0005, 0)
-            self.alpha = np.cos(0.00025*self.trials)
+            self.alpha = np.cos(0.005*self.trials)
+            #self.alpha = np.cos(0.00025*self.trials)
 
         return None
 
@@ -73,7 +75,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set 'state' as a tuple of relevant data for the agent        
-        state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'] )
+        state = (waypoint, inputs['light'], inputs['oncoming'], inputs['left'] )
 
         return state
 
@@ -138,7 +140,7 @@ class LearningAgent(Agent):
             
         else:
             # choose None, forward, left or right randomly
-            random.choice(Environment.valid_actions) 
+            action = random.choice(Environment.valid_actions) 
             
  
         return action
@@ -155,6 +157,7 @@ class LearningAgent(Agent):
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
         if self.learning:
+            #self.Q[state][action] += self.alpha * (reward + self.Q[state][action])
             self.Q[state][action] += self.alpha * (reward - self.Q[state][action])
 
         return
@@ -192,7 +195,6 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    # agent = env.create_agent(LearningAgent, learning = True)
     #agent = env.create_agent(LearningAgent, learning = True)
     agent = env.create_agent(LearningAgent, learning = True, epsilon=1.0, alpha=1.0)
     
@@ -218,7 +220,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    #sim.run(n_test=10)
+    #sim.run(n_test=100)
     sim.run(tolerance = 0.001, n_test=100)
 
 
