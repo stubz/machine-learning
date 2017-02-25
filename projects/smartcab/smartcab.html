@@ -13558,9 +13558,9 @@ There is no major accidents in the simulation. It has the major violations, and 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer:</strong></p>
 <p>For the 'inputs' variable, there are four categories. 'Light' has either red or blue options (i.e. 2 options), 'left' has four options (left, right, forward or None), 'right' has four options (left, right, forward, None) and 'oncoming' also has four options (left, right, forward, None).</p>
-<p>'waypoint' has four options (left, right, forward, None).</p>
-<p>So in total there are 2 times 4 times 4 times 4 = 128 possible states.</p>
-<p>But 'right' can be redundant. When you turn right, you need to look at your left or oncoming traffic, but not right. So the number of possible states goes down to 32.</p>
+<p>'waypoint' has four options (left, right, forward).</p>
+<p>So in total there are 3 times 4 times 4 times 4 = 192 possible states.</p>
+<p>But 'right' can be redundant. When you turn right, you need to look at your left or oncoming traffic, but not right. So the number of possible states goes down to 48.</p>
 <p>The number of states is not huge, so it's possible for the agent to learn a policy for each possible state.</p>
 
 </div>
