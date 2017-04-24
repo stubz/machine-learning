@@ -12,7 +12,7 @@ You will find an `open_projects` folder in these files. This will be where pre-c
 
 Please email [machine-support@udacity.com](mailto:machine-support@udacity.com) if you have any questions.
 
-## Packaged used
+## Packages used
 * panda
 * numpy
 * matplotlib
@@ -23,3 +23,5 @@ Please email [machine-support@udacity.com](mailto:machine-support@udacity.com) i
 ## Software
 All the coding was done by python using Jupyter notebook.
 
+## Data
+The original data set was downloaded from Ministry of Land, Infrastructure, Transport and Tourism (MLIT). The size of the original csv file is about 80 MB, the zipped file is uploaded to GitHub page, "13_Tokyo_20053_20163.zip." The unzipped file, "13_Tokyo_20053_20163.csv," is used in the notebook file.
