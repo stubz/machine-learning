@@ -11,3 +11,15 @@ You can find the [capstone proposal rubric here](https://review.udacity.com/#!/r
 You will find an `open_projects` folder in these files. This will be where pre-curated capstone projects are available, should you choose to work on a project already partially designed for you. 
 
 Please email [machine-support@udacity.com](mailto:machine-support@udacity.com) if you have any questions.
+
+## Packaged used
+* panda
+* numpy
+* matplotlib
+* seaborn
+* pickle
+* scikit-learn
+
+## Software
+All the coding was done by python using Jupyter notebook.
+
